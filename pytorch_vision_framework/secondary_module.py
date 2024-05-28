@@ -62,7 +62,7 @@ def check_cuda_availability():
     is_or_is_not = 'is' if torch.cuda.is_available() else 'is not'
     symbol = '✔' if torch.cuda.is_available() else 'X'
      
-    print(f"{symbol*2} --- Cuda {is_or_is_not} available on your machine. --- {symbol*2}")
+    print(f"{symbol*2}\t--- Cuda {is_or_is_not} available on your machine. ---\t{symbol*2}")
     
     
 def colorize(to_print, color):
