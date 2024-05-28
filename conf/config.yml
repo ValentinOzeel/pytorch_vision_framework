@@ -1,0 +1,61 @@
+DATA_SPLITS:
+  train_test_ratio: 0.93
+  train_val_ratio: 0.90
+
+RANDOM_SEED: null
+
+DATASET: CustomDfImageFolder # or any torchvision.datasets
+
+DATA_LOADER:
+  batch_size: 16
+  num_workers: 2
+  pin_memory: True
+
+DATA_TRANSFORM_AND_AUGMENTATION:
+  train:
+    Resize: 
+        size: [256, 256]
+#    RandAugment: 
+#        num_ops: 3
+#        magnitude: 10
+    TrivialAugmentWide:
+        num_magnitude_bins: 31
+    ToTensor: {}
+    Normalize: {} # Normalization value computed internally
+  val:
+    Resize: 
+        size: [256, 256]
+    ToTensor: {}
+    Normalize: {}
+  test:
+    Resize: 
+        size: [256, 256]
+    ToTensor: {}
+    Normalize: {}
+
+MODEL_PARAMS:
+  hidden_units: 32
+  epochs: 500
+  loss_func: CrossEntropyLoss
+  activation_func: LeakyReLU
+  optimizer: 
+    Adam:
+      lr: 0.001
+  lr_scheduler:
+    ReduceLROnPlateau:
+      mode: min
+      factor: 0.25
+      patience: 1
+  early_stopping:
+    patience: 15
+    delta: 0
+    save_checkpoint: True
+    saving_option: state_dict # model, state_dict, onnx
+    save_dir_path: results/model
+    compress: True
+    verbose: True
+  metrics : [accuracy, precision, recall, f1]
+  torchmetrics:
+    ConfusionMatrix:
+      task: multiclass
+      num_classes: 4
