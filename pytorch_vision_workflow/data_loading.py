@@ -358,7 +358,7 @@ class LoadOurData():
 
         
     def print_dataset_info(self, datasets_types:List[str]=['train', 'val', 'test'], n_splits=None,
-                                 dataset_color = {'train':'LIGHTRED_EX', 'val':'LIGHTYELLOW_EX', 'test':'LIGHTMAGENTA_EX'}):
+                                 dataset_color = {'train':'LIGHTRED_EX', 'val':'LIGHTYELLOW_EX', 'test':'LIGHTBLUE_EX'}):
         '''
         Print metadata information for the datasets.
         Parameters:
@@ -369,14 +369,14 @@ class LoadOurData():
         
         print(colorize("---------- DATASETS INFO ----------", "LIGHTGREEN_EX"))
         
-        print(colorize("\nAll classes/labels: ", "BLUE"), self.class_to_idx, '\n')
+        print(colorize("\nAll classes/labels: ", "LIGHTMAGENTA_EX"), self.class_to_idx, '\n')
     
         for dataset_type in datasets_types:
             if self.datasets_metadata.get(dataset_type) is not None:
                 print(
                     colorize(f"Info regarding {dataset_type}_dataset:", dataset_color[dataset_type]),
-                    colorize("\nLength: ", "LIGHTBLUE_EX"), self.datasets_metadata[dataset_type]['length'],       
-                    colorize("\nImages per class: ", "LIGHTBLUE_EX"), self.datasets_metadata[dataset_type]['count_per_class'], '\n'     
+                    colorize("\nLength: ", "LIGHTCYAN_EX"), self.datasets_metadata[dataset_type]['length'],       
+                    colorize("\nImages per class: ", "LIGHTCYAN_EX"), self.datasets_metadata[dataset_type]['count_per_class'], '\n'     
                 )        
         
         if n_splits:
@@ -385,8 +385,8 @@ class LoadOurData():
                 for dataset_type in self.cross_val_datasets:
                     print(
                         colorize(f"Info regarding {dataset_type}_dataset, fold -- {i} -- of cross-validation:", dataset_color[dataset_type]),
-                        colorize("\nLength: ", "LIGHTBLUE_EX"), self.cross_val_datasets_metadata[dataset_type][i]['length'],       
-                        colorize("\nImages per class: ", "LIGHTBLUE_EX"), self.cross_val_datasets_metadata[dataset_type][i]['count_per_class'], '\n'     
+                        colorize("\nLength: ", "LIGHTCYAN_EX"), self.cross_val_datasets_metadata[dataset_type][i]['length'],       
+                        colorize("\nImages per class: ", "LIGHTCYAN_EX"), self.cross_val_datasets_metadata[dataset_type][i]['count_per_class'], '\n'     
                     )  
         
                               

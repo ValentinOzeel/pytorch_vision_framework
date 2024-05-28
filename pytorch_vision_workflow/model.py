@@ -550,7 +550,7 @@ class TrainTestEval():
                     print_train_metrics = ''.join([print_train_metrics, colorize(''.join([metric_name, ': ']), "RED"), f"{train_metrics[metric_name]:.4f}", colorize(" | ", "LIGHTMAGENTA_EX")])
        
                 for metric_name in self.curve_metrics:
-                    print_val_metrics = ''.join([print_val_metrics, colorize(''.join([metric_name, ': ']), "BLUE"), f"{val_metrics[metric_name]:.4f}", colorize(" | ", "LIGHTMAGENTA_EX")])
+                    print_val_metrics = ''.join([print_val_metrics, colorize(''.join([metric_name, ': ']), "LIGHTBLUE_EX"), f"{val_metrics[metric_name]:.4f}", colorize(" | ", "LIGHTMAGENTA_EX")])
                 # Print metrics at each epoch
                 print(
                     colorize("\nEpoch: ", "LIGHTGREEN_EX"), epoch,
