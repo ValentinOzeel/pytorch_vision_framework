@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "pytorch_vision_workflow"
+version = "0.1.0"
+description = "A project for easy training, validation, testing of pytorch models."
+authors = ["Valentin Ozeel <your.email@example.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/ValentinOzeel/pytorch_vision_workflow"
+packages = [{include = "pytorch_vision_workflow"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+PyYAML = "^6.0"
+colorama = "^0.4"
+torchinfo = "^1.8"
+torchmetrics = "^1.4.0.post0"
+tqdm = "^4.66"
+matplotlib = "^3.9"
+scikit-learn = "^1.5"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+flake8 = "^3.9.2"
+black = "^21.5b1"
