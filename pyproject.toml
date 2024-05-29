@@ -10,6 +10,7 @@ packages = [{include = "pytorch_vision_framework"}]
    
 [tool.poetry.dependencies]
 python = "^3.10"
+pandas = "^2.2"
 PyYAML = "^6.0"
 colorama = "^0.4"
 torchinfo = "^1.8"
