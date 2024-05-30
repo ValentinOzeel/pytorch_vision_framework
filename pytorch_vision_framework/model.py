@@ -701,7 +701,7 @@ class TrainTestEval():
         # Inference mode (not to compute gradient)
         with torch.inference_mode():
             # Loop over batches
-            for i, (imgs, _) in enumerate(dataloader):
+            for i, imgs in enumerate(dataloader):
                 # Set data to device
                 imgs = imgs.to(self.device)
                 # Forward pass
