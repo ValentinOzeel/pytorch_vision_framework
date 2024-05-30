@@ -16,8 +16,8 @@ from .secondary_module import colorize
 
 
 class LoadOurData():
-    def __init__(self, data_dir_path:str, DatasetClass:Dataset, 
-                 test_data_dir_path=None, random_seed:int=None, inference:bool=False):
+    def __init__(self, DatasetClass:Dataset, data_dir_path:str=None, 
+                 test_data_dir_path=None, random_seed:int=None, inference_only:bool=True, inference_input:List=None):
         """
     A class to load, preprocess, and manage datasets for training, validation, and testing purposes.
         
@@ -26,15 +26,17 @@ class LoadOurData():
         - DatasetClass (Dataset): Custom Dataset class to handle data loading and processing.
         - test_data_dir_path (str, optional): Directory path for test data. Default is None.
         - random_seed (int, optional): Seed for random number generators. Default is None.
-        - inference (bool, optional): Flag indicating whether to use the class for inference. Default is False.
+        - inference_only (bool, optional): Flag indicating whether to use the class for inference. Default is False.
+        - inference_type (str, needed if inference_only): type of inference data input.
         
         Attributes:
         - data_prep (DataPrep): An instance of the DataPrep class for data preparation.
         - original_df (pd.DataFrame): DataFrame containing the paths and class labels of the original dataset.
         - DatasetClass (Dataset): The dataset class to be used for creating dataset instances.
         - random_seed (int): Seed for random number generation to ensure reproducibility.
-        - inference (bool): Flag indicating if the data is for inference purposes.
         - test_data_dir_path (str): Path to the directory containing the test data.
+
+        - inference_only (bool): Flag indicating if the data is for inference purposes.
         
         - classes (List[str]): List of class names.
         - class_to_idx (Dict[str, int]): Dictionary mapping class names to indices.
@@ -59,7 +61,7 @@ class LoadOurData():
         Otherwise, activate inference Flag to tell that your data_dir is for your inference data
         """
         
-        if not inference:
+        if not inference_only:
             self.data_prep = DataPrep(root=data_dir_path, random_seed=random_seed)
             self.original_df = self.data_prep.create_path_class_df()
 
@@ -96,8 +98,12 @@ class LoadOurData():
             self.std = None
             
         else:
-            self.inference_data_prep = DataPrep(root=data_dir_path)
-            self.inference_df = self.inference_data_prep.create_path_class_df()
+            if data_dir_path:
+                inference_data_prep = DataPrep(root=data_dir_path)
+                self.inference_input = inference_data_prep.create_path_class_df()
+            else:
+                self.inference_input = inference_input
+                
             self.DatasetClass = DatasetClass
             
     def _get_created_dataset_types(self, class_obj, attr_suffix:str, types:List = ['train', 'val', 'test']) -> List:
@@ -476,6 +482,10 @@ class LoadOurData():
         return
  
 
+
+
+            
+            
     def load_inference_data(self, transform_steps:List, data_loader_params:Dict) -> DataLoader:
         '''
         Create inference dataloader.
@@ -485,7 +495,7 @@ class LoadOurData():
         Returns : inference dataloader
         '''
         transform = transforms.Compose(transform_steps)
-        inference_dataset = self.DatasetClass(self.inference_df, transform=transform)
+        inference_dataset = self.DatasetClass(self.inference_input, transform=transform)
         return self.create_dataloader(inference_dataset, shuffle=False, data_loader_params=data_loader_params)
 
     

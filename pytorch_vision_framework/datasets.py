@@ -205,16 +205,4 @@ class CustomDfImageFolder(Dataset):
         # Potentially transform image and label
         image = self.transform(image) if self.transform else image 
         class_label = self.target_transform(class_label) if self.target_transform else class_label
-        return image, class_label
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
- 
+        return image, class_label 
