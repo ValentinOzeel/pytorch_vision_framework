@@ -17,7 +17,7 @@ from .secondary_module import colorize
 
 class LoadOurData():
     def __init__(self, DatasetClass:Dataset, data_dir_path:str=None, 
-                 test_data_dir_path=None, random_seed:int=None, inference_only:bool=True, inference_input:List=None):
+                 test_data_dir_path=None, random_seed:int=None, inference_only:bool=True, inference_input:List=None, additional_dataset_kwargs:Dict=None):
         """
     A class to load, preprocess, and manage datasets for training, validation, and testing purposes.
         
@@ -103,7 +103,8 @@ class LoadOurData():
                 self.inference_input = inference_data_prep.create_path_class_df()
             else:
                 self.inference_input = inference_input
-                
+            
+            self.additional_dataset_kwargs = additional_dataset_kwargs
             self.DatasetClass = DatasetClass
             
     def _get_created_dataset_types(self, class_obj, attr_suffix:str, types:List = ['train', 'val', 'test']) -> List:
@@ -495,7 +496,12 @@ class LoadOurData():
         Returns : inference dataloader
         '''
         transform = transforms.Compose(transform_steps)
-        inference_dataset = self.DatasetClass(self.inference_input, transform=transform)
+        
+        if self.additional_dataset_kwargs: 
+            inference_dataset = self.DatasetClass(self.inference_input, transform=transform, **self.additional_dataset_kwargs)
+        else:
+            self.DatasetClass(self.inference_input, transform=transform)
+            
         return self.create_dataloader(inference_dataset, shuffle=False, data_loader_params=data_loader_params)
 
     
