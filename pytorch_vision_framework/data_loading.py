@@ -500,7 +500,7 @@ class LoadOurData():
         if self.additional_dataset_kwargs: 
             inference_dataset = self.DatasetClass(self.inference_input, transform=transform, **self.additional_dataset_kwargs)
         else:
-            self.DatasetClass(self.inference_input, transform=transform)
+            inference_dataset = self.DatasetClass(self.inference_input, transform=transform)
             
         return self.create_dataloader(inference_dataset, shuffle=False, data_loader_params=data_loader_params)
 
